@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DatasetLabs.org — Crafting AI-Ready Datasets</title>
-  <meta name="description" content="DatasetLabs.org is a non-profit preparing, validating, and structuring datasets so they’re ready to train AI and ML models that solve real-world problems." />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>datasetlab.org — Crafting AI-Ready Datasets</title>
+  <meta name="description" content="datasetlab.org is a non-profit that prepares, validates, and structures datasets so teams can train AI/ML models faster and more responsibly." />
+  <meta name="theme-color" content="#0a1c2a" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='18' fill='%2317a2a4'/%3E%3Cg fill='%23fff'%3E%3Ccircle cx='40' cy='64' r='10'/%3E%3Ccircle cx='92' cy='32' r='10'/%3E%3Ccircle cx='92' cy='96' r='10'/%3E%3Cpath d='M50 64h30M84 40L58 54M58 74l26 14' stroke='%23fff' stroke-width='6' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E" />
 
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -20,24 +22,24 @@
             muted: "#a9c3c3"
           }
         }
-      },
-      darkMode: "class"
+      }
     }
   </script>
   <style>
-    /* smooth fonts on dark backgrounds */
-    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    @media (prefers-reduced-motion: reduce){
+      *{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}
+    }
   </style>
 </head>
 <body class="bg-ink text-slate-100">
-
   <!-- Header -->
   <header class="sticky top-0 z-30 border-b border-slate-800/80 bg-ink/70 backdrop-blur">
     <div class="mx-auto max-w-6xl px-4">
       <nav class="flex h-16 items-center justify-between">
-        <a href="#top" class="flex items-center gap-3" aria-label="DatasetLabs.org home">
-          <!-- Square logo with .org inside -->
-          <svg viewBox="0 0 160 160" class="h-10 w-10 shrink-0">
+        <!-- Logo -->
+        <a href="#top" class="flex items-center gap-3" aria-label="datasetlab.org home">
+          <svg viewBox="0 0 160 160" class="h-10 w-10">
             <rect width="160" height="160" rx="22" fill="#17a2a4"/>
             <g fill="#fff">
               <circle cx="52" cy="80" r="11"/>
@@ -46,48 +48,66 @@
               <path d="M63 80h38M104 52L72 68M72 92l32 16" stroke="#fff" stroke-linecap="round" stroke-width="7"/>
             </g>
             <text x="12" y="150" fill="#0a1c2a" font-family="ui-sans-serif,system-ui,Segoe UI,Roboto,Inter,Arial" font-size="18" font-weight="800">
-              DatasetLabs.org
+              datasetlab.org
             </text>
           </svg>
-          <span class="text-lg font-extrabold tracking-tight">DatasetLabs<span class="font-extrabold text-slate-200">.org</span></span>
+          <span class="text-lg font-extrabold tracking-tight">datasetlab<span class="text-slate-200">.org</span></span>
         </a>
+
+        <!-- Desktop nav -->
         <div class="hidden items-center gap-6 md:flex">
           <a href="#work" class="hover:text-white/90 text-slate-200">Work</a>
-          <a href="#flagship" class="hover:text-white/90 text-slate-200">Flagship</a>
+          <a href="#focus" class="hover:text-white/90 text-slate-200">Focus</a>
           <a href="#contributors" class="hover:text-white/90 text-slate-200">Contributors</a>
-          <a href="#join" class="rounded-xl bg-brand px-4 py-2 font-semibold text-ink hover:bg-brand2">Get involved</a>
+          <a href="https://www.linkedin.com/company/datasetlab-org/" target="_blank" rel="noopener"
+             class="rounded-xl bg-brand px-4 py-2 font-semibold text-ink hover:bg-brand2">Contact via LinkedIn</a>
         </div>
+
+        <!-- Mobile menu button -->
+        <button id="menuBtn" class="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-slate-200 hover:bg-slate-800"
+                aria-controls="mobileMenu" aria-expanded="false" aria-label="Open menu">
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
       </nav>
+
+      <!-- Mobile menu -->
+      <div id="mobileMenu" class="hidden flex-col gap-2 pb-4 md:hidden">
+        <a href="#work" class="block rounded-lg px-3 py-2 text-slate-200 hover:bg-slate-800">Work</a>
+        <a href="#focus" class="block rounded-lg px-3 py-2 text-slate-200 hover:bg-slate-800">Focus</a>
+        <a href="#contributors" class="block rounded-lg px-3 py-2 text-slate-200 hover:bg-slate-800">Contributors</a>
+        <a href="https://www.linkedin.com/company/datasetlab-org/" target="_blank" rel="noopener"
+           class="block rounded-lg bg-brand px-3 py-2 text-center font-semibold text-ink hover:bg-brand2">Contact via LinkedIn</a>
+      </div>
     </div>
   </header>
 
   <main id="top">
-
     <!-- Hero -->
-    <section class="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-4 py-14 md:grid-cols-2">
+    <section class="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-4 py-10 md:grid-cols-2 md:py-14">
       <div>
         <span class="inline-flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-900/50 px-3 py-1 text-sm text-teal-100/90">
           <span class="h-2 w-2 rounded-full bg-brand"></span> Non-profit • Open • Credited
         </span>
-        <h1 class="mt-4 text-4xl font-extrabold leading-tight md:text-5xl">
+        <h1 class="mt-4 text-3xl font-extrabold leading-tight sm:text-4xl md:text-5xl">
           Crafting <em class="not-italic text-brand">AI-ready datasets</em> for global impact.
         </h1>
-        <p class="mt-4 font-mono text-slate-300">
-          We prepare, validate, and structure datasets so teams can train neural networks faster—starting with high-value science like molecule&nbsp;→&nbsp;protein interactions for medicine.
+        <p class="mt-3 font-mono text-slate-300">
+          We prepare, validate, and structure datasets so teams can train neural networks faster and more responsibly.
         </p>
-        <div class="mt-6 flex flex-wrap items-center gap-4">
-          <a href="#join" class="rounded-xl bg-brand px-4 py-2 font-semibold text-ink hover:bg-brand2">Become a contributor</a>
-          <a href="#flagship" class="text-slate-200 underline-offset-4 hover:underline">See an example</a>
+        <div class="mt-5 flex flex-wrap items-center gap-3">
+          <a href="https://www.linkedin.com/company/datasetlab-org/" target="_blank" rel="noopener"
+             class="rounded-xl bg-brand px-4 py-3 text-center font-semibold text-ink hover:bg-brand2">Contact via LinkedIn</a>
+          <a href="#work" class="text-slate-200 underline-offset-4 hover:underline">How it works</a>
         </div>
 
-        <div class="mt-8 grid grid-cols-1 gap-3 md:grid-cols-3">
+        <div class="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-3">
           <div class="rounded-2xl border border-slate-800 bg-card p-4">
             <h3 class="text-base font-semibold">Preparation</h3>
             <p class="mt-1 text-sm text-muted">Cleaning, normalization, schema, metadata, splits.</p>
           </div>
           <div class="rounded-2xl border border-slate-800 bg-card p-4">
             <h3 class="text-base font-semibold">Validation</h3>
-            <p class="mt-1 text-sm text-muted">Reproducible checks, unit tests for data, audit trails.</p>
+            <p class="mt-1 text-sm text-muted">Automated checks, peer review, audit trails.</p>
           </div>
           <div class="rounded-2xl border border-slate-800 bg-card p-4">
             <h3 class="text-base font-semibold">Release</h3>
@@ -100,17 +120,17 @@
         <div class="rounded-2xl border border-slate-800 bg-card p-5">
           <h3 class="text-lg font-semibold">What we publish</h3>
           <ul class="mt-2 list-disc pl-5 text-sm text-muted">
-            <li>Train/valid/test splits</li>
-            <li>Provenance &amp; decisions log</li>
-            <li>Units &amp; conversions</li>
-            <li>Task definitions &amp; baselines</li>
-            <li>Versioned changelog + diff</li>
+            <li>Train/validation/test splits and clear task definitions.</li>
+            <li>Provenance and decisions log for full traceability.</li>
+            <li>Units, conversions, and unambiguous schemas.</li>
+            <li>Responsible-use notes and documented caveats.</li>
+            <li>Versioned releases with changelogs and diffs.</li>
           </ul>
         </div>
         <div class="rounded-2xl border border-slate-800 bg-card p-5">
           <h3 class="text-lg font-semibold">Focus areas</h3>
           <div class="mt-2 flex flex-wrap gap-2">
-            <span class="rounded-lg border border-teal-700/50 bg-teal-900/20 px-2 py-1 text-sm">Drug–protein binding</span>
+            <span class="rounded-lg border border-teal-700/50 bg-teal-900/20 px-2 py-1 text-sm">Biomedicine</span>
             <span class="rounded-lg border border-teal-700/50 bg-teal-900/20 px-2 py-1 text-sm">Climate &amp; environment</span>
             <span class="rounded-lg border border-teal-700/50 bg-teal-900/20 px-2 py-1 text-sm">Agriculture</span>
             <span class="rounded-lg border border-teal-700/50 bg-teal-900/20 px-2 py-1 text-sm">Biodiversity</span>
@@ -121,53 +141,14 @@
       </div>
     </section>
 
-    <!-- Flagship -->
-    <section id="flagship" class="border-t border-slate-800/70 bg-slate-950/30 py-12">
-      <div class="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-4 md:grid-cols-2">
-        <div class="rounded-2xl border border-slate-800 bg-card p-6">
-          <h2 class="text-2xl font-bold">Flagship example — Molecules ↔ Proteins</h2>
-          <p class="mt-2 text-slate-300">
-            Decades of experiments capture how small molecules bind to protein targets, but the records are fragmented and inconsistent. Preparing this data unlocks AI models that propose better candidates, speed discovery, and reduce costs.
-          </p>
-          <h3 class="mt-4 font-semibold">What we do</h3>
-          <ul class="mt-1 list-disc pl-5 text-sm text-muted">
-            <li>Unify affinity measures (Kd, Ki, IC<sub>50</sub>) and units.</li>
-            <li>Map identifiers across sources; deduplicate contradictions.</li>
-            <li>Attach assay context as structured metadata.</li>
-            <li>Define DTI regression/classification with fair splits.</li>
-            <li>Document caveats &amp; known biases for responsible use.</li>
-          </ul>
-        </div>
-        <div class="rounded-2xl border border-slate-800 bg-card p-6">
-          <h3 class="text-lg font-semibold">AI-ready output (manifest)</h3>
-          <pre class="mt-2 overflow-auto rounded-xl bg-slate-900/70 p-4 text-sm text-slate-200">
-tasks:
-  - dti_regression: kd_nm
-  - dti_classification: binder_threshold_nm
-splits:
-  - cold_drug
-  - cold_target
-schema:
-  ligand_id: string
-  target_uniprot: string
-  measure: float
-  unit: nM
-provenance:
-  sources: [literature, db_records]
-license: CC BY 4.0
-          </pre>
-        </div>
-      </div>
-    </section>
-
     <!-- How it works -->
-    <section id="work" class="py-12">
+    <section id="work" class="border-t border-slate-800/70 bg-slate-950/30 py-10 md:py-12">
       <div class="mx-auto max-w-6xl px-4">
         <h2 class="text-2xl font-bold">How it works</h2>
-        <div class="mt-4 grid grid-cols-1 gap-3 md:grid-cols-4">
+        <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <div class="rounded-2xl border border-slate-800 bg-card p-4">
             <h3 class="font-semibold">1 · Intake</h3>
-            <p class="mt-1 text-sm text-muted">Ingest public sources, parse, capture provenance.</p>
+            <p class="mt-1 text-sm text-muted">Ingest public sources, parse, and capture provenance.</p>
           </div>
           <div class="rounded-2xl border border-slate-800 bg-card p-4">
             <h3 class="font-semibold">2 · Prepare</h3>
@@ -175,78 +156,139 @@ license: CC BY 4.0
           </div>
           <div class="rounded-2xl border border-slate-800 bg-card p-4">
             <h3 class="font-semibold">3 · Validate</h3>
-            <p class="mt-1 text-sm text-muted">Automated checks + peer review; tests in the repo.</p>
+            <p class="mt-1 text-sm text-muted">Automated checks plus peer review; tests live in the repo.</p>
           </div>
           <div class="rounded-2xl border border-slate-800 bg-card p-4">
             <h3 class="font-semibold">4 · Publish</h3>
-            <p class="mt-1 text-sm text-muted">Versioned releases with docs, baselines, and credit.</p>
+            <p class="mt-1 text-sm text-muted">Versioned releases with docs, baselines, and named credit.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Contributors -->
-    <section id="contributors" class="border-t border-slate-800/70 bg-slate-950/30 py-12">
-      <div class="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-4 md:grid-cols-2">
-        <div class="rounded-2xl border border-slate-800 bg-card p-6">
-          <h2 class="text-2xl font-bold">Contributors are featured</h2>
-          <p class="mt-2 text-slate-300">
-            Each dataset page lists its <span class="font-semibold">Data Team</span> with contribution history. When an organization adopts a dataset, they can hire the same experts who prepared it.
-          </p>
-          <ul class="mt-2 list-disc pl-5 text-sm text-muted">
-            <li>Per-PR contribution log</li>
-            <li>Reviewer badges &amp; tests authored</li>
-            <li>Release notes with named changes</li>
-          </ul>
+    <section id="contributors" class="py-10 md:py-12">
+      <div class="mx-auto max-w-6xl px-4">
+        <h2 class="text-2xl font-bold">What’s in it for contributors</h2>
+        <div class="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
+          <div class="rounded-2xl border border-slate-800 bg-card p-6">
+            <h3 class="text-lg font-semibold">Public credit & portfolio</h3>
+            <p class="mt-2 text-slate-300">
+              Every dataset lists a <span class="font-semibold">Data Team</span> with visible contribution history (prep, validation, review). Your work becomes a verifiable, public portfolio.
+            </p>
+            <ul class="mt-2 list-disc pl-5 text-sm text-muted">
+              <li>Per-change attribution</li>
+              <li>Release notes with named changes</li>
+              <li>Reviewer badges and test authorship</li>
+            </ul>
+          </div>
+
+          <div class="rounded-2xl border border-slate-800 bg-card p-6">
+            <h3 class="text-lg font-semibold">Expertise → consulting pathway</h3>
+            <p class="mt-2 text-slate-300">
+              As organizations adopt a dataset, they often need the people who know it best. Because you’ve built and validated the data, you’ve developed a deep relationship with it — making you the natural choice for <span class="font-semibold">paid consulting</span> or <span class="font-semibold">hiring</span>.
+            </p>
+            <ul class="mt-2 list-disc pl-5 text-sm text-muted">
+              <li>Direct contact via dataset pages</li>
+              <li>Clear evidence of expertise and domain knowledge</li>
+              <li>Priority consideration for collaborations and roles</li>
+            </ul>
+          </div>
+
+          <div class="rounded-2xl border border-slate-800 bg-card p-6">
+            <h3 class="text-lg font-semibold">Community, learning, mentorship</h3>
+            <p class="mt-2 text-slate-300">
+              Collaborate with peers on real data problems, receive reviews, and level up your data engineering and ML ops skills in a supportive, mission-driven environment.
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-slate-800 bg-card p-6">
+            <h3 class="text-lg font-semibold">Responsible AI by design</h3>
+            <p class="mt-2 text-slate-300">
+              We document caveats, biases, and provenance so downstream users train models more responsibly — and your work stands on solid ethical and technical ground.
+            </p>
+          </div>
         </div>
-        <div class="rounded-2xl border border-slate-800 bg-card p-6">
-          <h3 class="text-lg font-semibold">Ledger (example)</h3>
-          <pre class="mt-2 overflow-auto rounded-xl bg-slate-900/70 p-4 text-sm text-slate-200">
-2025-08-10  @analyst-lee   normalize units → nM
-2025-08-12  @m.khan        dedup 1,203 ligand IDs
-2025-08-13  @s.evans       add cold_target split
-2025-08-15  @a.rivera      doc assay caveats v1.1
-          </pre>
+
+        <div class="mt-6">
+          <a href="https://www.linkedin.com/company/datasetlab-org/" target="_blank" rel="noopener"
+             class="inline-block rounded-xl bg-brand px-5 py-3 font-semibold text-ink hover:bg-brand2">Contact via LinkedIn</a>
         </div>
       </div>
     </section>
 
-    <!-- Call to action -->
-    <section id="join" class="py-12">
-      <div class="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-4 md:grid-cols-2">
-        <div class="rounded-2xl border border-slate-800 bg-card p-6">
-          <h2 class="text-xl font-bold">Contribute</h2>
-          <p class="mt-2 text-slate-300">Data analysts, curators, reviewers—help prepare high-impact datasets and build a public portfolio of verified work.</p>
-          <a href="mailto:hello@datasetlabs.org?subject=Contributor%20interest"
-             class="mt-4 inline-block rounded-xl bg-brand px-4 py-2 font-semibold text-ink hover:bg-brand2">Email to join</a>
+    <!-- Focus areas -->
+    <section id="focus" class="border-t border-slate-800/70 bg-slate-950/30 py-10 md:py-12">
+      <div class="mx-auto max-w-6xl px-4">
+        <h2 class="text-2xl font-bold">Focus areas</h2>
+        <p class="mt-2 text-slate-300">We prioritize domains where clean, validated datasets unlock outsized impact for AI/ML research and applications.</p>
+        <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="rounded-2xl border border-slate-800 bg-card p-5">
+            <h3 class="font-semibold">Biomedicine</h3>
+            <p class="mt-1 text-sm text-muted">Standardized measurements, harmonized identifiers, assay context, and responsible-use documentation.</p>
+          </div>
+          <div class="rounded-2xl border border-slate-800 bg-card p-5">
+            <h3 class="font-semibold">Climate & environment</h3>
+            <p class="mt-1 text-sm text-muted">Integrations across observations, models, and geospatial layers with clear metadata and licenses.</p>
+          </div>
+          <div class="rounded-2xl border border-slate-800 bg-card p-5">
+            <h3 class="font-semibold">Agriculture</h3>
+            <p class="mt-1 text-sm text-muted">Crop, soil, and yield datasets aligned for forecasting and decision support.</p>
+          </div>
+          <div class="rounded-2xl border border-slate-800 bg-card p-5">
+            <h3 class="font-semibold">Biodiversity</h3>
+            <p class="mt-1 text-sm text-muted">Species, habitat, and monitoring records prepared for detection and conservation use cases.</p>
+          </div>
+          <div class="rounded-2xl border border-slate-800 bg-card p-5">
+            <h3 class="font-semibold">Education</h3>
+            <p class="mt-1 text-sm text-muted">Anonymized learning datasets with fairness safeguards and clear evaluation splits.</p>
+          </div>
+          <div class="rounded-2xl border border-slate-800 bg-card p-5">
+            <h3 class="font-semibold">Accessibility</h3>
+            <p class="mt-1 text-sm text-muted">Structured datasets for assistive technologies and inclusive ML experiences.</p>
+          </div>
         </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="join" class="py-10 md:py-12">
+      <div class="mx-auto max-w-6xl px-4">
         <div class="rounded-2xl border border-slate-800 bg-card p-6">
-          <h2 class="text-xl font-bold">Partner</h2>
-          <p class="mt-2 text-slate-300">Research teams, startups, nonprofits—use our AI-ready datasets or collaborate on new ones.</p>
-          <a href="mailto:hello@datasetlabs.org?subject=Partnership%20inquiry"
-             class="mt-4 inline-block rounded-xl bg-brand px-4 py-2 font-semibold text-ink hover:bg-brand2">Partner with us</a>
+          <h2 class="text-xl font-bold">Interested in contributing or partnering?</h2>
+          <p class="mt-2 text-slate-300">We’re building a transparent pipeline from dataset preparation to responsible use — with public credit for every contributor.</p>
+          <a href="https://www.linkedin.com/company/datasetlab-org/" target="_blank" rel="noopener"
+             class="mt-4 inline-block w-full rounded-xl bg-brand px-4 py-3 text-center font-semibold text-ink hover:bg-brand2 sm:w-auto">Contact via LinkedIn</a>
         </div>
       </div>
     </section>
   </main>
 
   <!-- Footer -->
-  <footer class="border-t border-slate-800 py-10">
+  <footer class="border-t border-slate-800 py-8">
     <div class="mx-auto max-w-6xl px-4">
-      <div class="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+      <div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <strong class="font-extrabold">DatasetLabs.org</strong>
+          <strong class="font-extrabold">datasetlab.org</strong>
           <div class="text-sm text-slate-400">Open • Credited • AI-ready datasets</div>
         </div>
-        <div class="space-x-4">
-          <a href="mailto:hello@datasetlabs.org" class="text-slate-200 hover:underline">hello@datasetlabs.org</a>
-          <a href="https://github.com/your-org" target="_blank" rel="noopener" class="text-slate-200 hover:underline">GitHub</a>
-        </div>
+        <a href="https://www.linkedin.com/company/datasetlab-org/" target="_blank" rel="noopener"
+           class="rounded-xl border border-slate-700 px-4 py-2 text-slate-200 hover:bg-slate-800">Connect on LinkedIn</a>
       </div>
+      <p class="mt-4 text-xs text-slate-500">© <span id="y"></span> datasetlab.org</p>
     </div>
   </footer>
 
+  <script>
+    // Mobile menu toggle
+    const btn = document.getElementById('menuBtn');
+    const menu = document.getElementById('mobileMenu');
+    btn?.addEventListener('click', () => {
+      const open = menu.classList.toggle('hidden');
+      btn.setAttribute('aria-expanded', String(!open));
+    });
+    // Year
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
-
-
