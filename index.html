@@ -1,1 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DatasetLabs.org — Crafting AI-Ready Datasets for Global Impact</title>
+  <meta name="description" content="DatasetLabs.org is a non-profit preparing, validating, and structuring datasets so they’re ready to train AI and ML models that solve real-world problems." />
+  <meta property="og:title" content="DatasetLabs.org" />
+  <meta property="og:description" content="Crafting AI-ready datasets for global impact." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='48' fill='%230A1C2A'/%3E%3Crect x='56' y='56' width='400' height='400' rx='40' fill='%2317A2A4'/%3E%3Cg fill='%23fff'%3E%3Ccircle cx='170' cy='256' r='28'/%3E%3Ccircle cx='342' cy='170' r='28'/%3E%3Ccircle cx='342' cy='342' r='28'/%3E%3Cpath d='M196 256h120M326 184l-92 56M234 272l92 56' stroke='%23fff' stroke-width='18' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='20' fill='%230A1C2A'/%3E%3Crect x='14' y='14' width='100' height='100' rx='14' fill='%2317A2A4'/%3E%3Cg fill='%23fff'%3E%3Ccircle cx='40' cy='64' r='8'/%3E%3Ccircle cx='88' cy='36' r='8'/%3E%3Ccircle cx='88' cy='92' r='8'/%3E%3Cpath d='M48 64h32M80 42L56 56M56 72l24 14' stroke='%23fff' stroke-width='5' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E" />
+  <style>
+    :root{
+      --bg:#0a1c2a; --fg:#e7f3f3; --muted:#a9c3c3; --card:#0f2434;
+      --brand:#17a2a4; --brand-2:#15b5b9; --ink:#0c1116;
+      color-scheme: light dark;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;}
+    a{color:var(--fg); text-decoration: none;}
+    a.btn{display:inline-block;padding:.8rem 1.1rem;border-radius:.8rem;background:var(--brand);
+      font-weight:600}
+    a.btn:hover{background:var(--brand-2)}
+    .wrap{max-width:1100px;margin:auto;padding:0 20px}
+    header{position:sticky;top:0;background:rgba(10,28,42,.7);backdrop-filter: blur(6px);border-bottom:1px solid #0e2a3c}
+    nav{display:flex;align-items:center;gap:1rem;justify-content:space-between;padding:.8rem 0}
+    .logo{display:flex;align-items:center;gap:.8rem}
+    .logo svg{width:40px;height:40px;flex:0 0 40px}
+    .logo .word{font-weight:800;letter-spacing:.2px}
+    .logo .org{opacity:.9;font-weight:700}
+    .hero{padding:72px 0 40px;display:grid;grid-template-columns:1.1fr .9fr;gap:2rem;align-items:center}
+    .hero h1{font-size:clamp(28px,5vw,44px);line-height:1.1;margin:.2rem 0}
+    .tag{display:inline-flex;gap:.5rem;align-items:center;background:#0e2333;border:1px solid #113043;color:#c5e7e7;padding:.45rem .7rem;border-radius:.7rem;font-size:.9rem}
+    .grid{display:grid;gap:1rem}
+    .features{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:28px}
+    .card{background:var(--card);border:1px solid #123246;border-radius:1rem;padding:1rem}
+    .card h3{margin:.2rem 0 .4rem;font-size:1.05rem}
+    .card p{color:var(--muted);margin:.3rem 0 0}
+    .section{padding:40px 0}
+    .section h2{font-size:clamp(22px,3.2vw,30px);margin:0 0 .6rem}
+    .chips{display:flex;flex-wrap:wrap;gap:.5rem}
+    .chip{border:1px dashed #1e5560;color:#c8ecec;background:#0c202a;padding:.4rem .6rem;border-radius:.6rem;font-size:.9rem}
+    .steps{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .step{counter-increment: s}
+    .step h3::before{content: counter(s);display:inline-grid;place-items:center;width:1.6rem;height:1.6rem;margin-right:.5rem;background:var(--brand);color:#022226;border-radius:.4rem;font-weight:700}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size:.95rem}
+    footer{padding:40px 0 60px;border-top:1px solid #0e2a3c;color:#b6d4d4}
+    /* Responsive */
+    @media (max-width: 920px){
+      .hero{grid-template-columns:1fr}
+      .features{grid-template-columns:1fr}
+      .steps{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width: 560px){
+      nav .links{display:none}
+      .steps{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="#top" aria-label="DatasetLabs.org home">
+        <!-- Square logo with .org inside -->
+        <svg viewBox="0 0 128 128" role="img" aria-label="DatasetLabs.org">
+          <rect width="128" height="128" rx="18" fill="#17A2A4"/>
+          <g fill="#fff" stroke="#fff" stroke-width="0">
+            <circle cx="36" cy="64" r="9"/>
+            <circle cx="92" cy="36" r="9"/>
+            <circle cx="92" cy="92" r="9"/>
+            <path d="M45 64h38M86 42L56 57M56 71l30 15" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+          </g>
+          <g fill="#0a1c2a" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" font-weight="800">
+            <text x="10" y="120" font-size="18">DatasetLabs.org</text>
+          </g>
+        </svg>
+        <div class="word">DatasetLabs<span class="org">.org</span></div>
+      </a>
+      <div class="links">
+        <a href="#work">Work</a>&ensp;·&ensp;
+        <a href="#flagship">Flagship</a>&ensp;·&ensp;
+        <a href="#contributors">Contributors</a>&ensp;·&ensp;
+        <a href="#join" class="btn">Get involved</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero wrap">
+    <div>
+      <span class="tag">Non-profit • Open • Credited</span>
+      <h1>Crafting <em>AI-ready datasets</em> for global impact.</h1>
+      <p class="mono">We prepare, validate, and structure datasets so teams can train neural networks faster—starting with high-value science like <span style="white-space:nowrap">molecule→protein</span> interactions for medicine.</p>
+      <p style="margin-top:1.1rem;">
+        <a class="btn" href="#join">Become a contributor</a>
+        &nbsp;&nbsp;<a href="#flagship">See an example</a>
+      </p>
+      <div class="grid features">
+        <div class="card"><h3>Preparation</h3><p>Cleaning, normalization, schema, metadata, splits.</p></div>
+        <div class="card"><h3>Validation</h3><p>Reproducible checks, unit tests for data, audit trails.</p></div>
+        <div class="card"><h3>Release</h3><p>Documentation, benchmarks, licenses, transparent credit.</p></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <h3>What we publish</h3>
+        <p class="mono">• Train/valid/test splits<br>• Provenance &amp; decisions log<br>• Measurement units &amp; conversions<br>• Task definitions &amp; baselines<br>• Versioned changelog + diff</p>
+      </div>
+      <div class="card" style="margin-top:1rem">
+        <h3>Focus areas</h3>
+        <div class="chips">
+          <span class="chip">Drug–protein binding</span>
+          <span class="chip">Climate &amp; environment</span>
+          <span class="chip">Agriculture</span>
+          <span class="chip">Biodiversity</span>
+          <span class="chip">Education</span>
+          <span class="chip">Accessibility</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="flagship" class="section wrap">
+    <h2>Flagship example — Molecules ↔ Proteins</h2>
+    <div class="grid" style="grid-template-columns:1.2fr .8fr; gap:1rem">
+      <div class="card">
+        <h3>Why it matters</h3>
+        <p>Decades of experiments capture how small molecules bind to protein targets, but the records are fragmented and inconsistent. Preparing this data unlocks AI models that propose better candidates, speed discovery, and reduce costs.</p>
+        <h3 style="margin-top:.8rem">What we do</h3>
+        <ul>
+          <li>Unify affinity measures (Kd, Ki, IC<sub>50</sub>) and units.</li>
+          <li>Map identifiers across sources, deduplicate contradictions.</li>
+          <li>Attach experimental context and assay notes as metadata.</li>
+          <li>Define ML tasks (DTI regression/classification) with fair splits.</li>
+          <li>Document caveats &amp; known biases for responsible use.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>AI-ready outputs</h3>
+        <pre class="mono" aria-label="example dataset manifest">
+tasks:
+  - dti_regression: kd_nm
+  - dti_classification: binder_threshold_nm
+splits:
+  - cold_drug
+  - cold_target
+schema:
+  ligand_id: string
+  target_uniprot: string
+  measure: float
+  unit: nM
+provenance:
+  sources: [literature, db_records]
+license: CC BY 4.0
+        </pre>
+      </div>
+    </div>
+  </section>
+
+  <section id="work" class="section wrap">
+    <h2>How it works</h2>
+    <div class="grid steps">
+      <div class="card step"><h3>Intake</h3><p>Ingest public sources, scrape/parse, capture provenance.</p></div>
+      <div class="card step"><h3>Prepare</h3><p>Normalize schemas, units, identifiers, and text fields.</p></div>
+      <div class="card step"><h3>Validate</h3><p>Automated checks + peer review; tests live in the repo.</p></div>
+      <div class="card step"><h3>Publish</h3><p>Release versioned datasets with docs, baselines, and credit.</p></div>
+    </div>
+  </section>
+
+  <section id="contributors" class="section wrap">
+    <h2>Contributors are featured</h2>
+    <div class="grid" style="grid-template-columns:1fr 1fr; gap:1rem">
+      <div class="card">
+        <h3>Transparent credit</h3>
+        <p>Each dataset page lists its <em>Data Team</em> with contribution history. When an organization adopts a dataset, they can hire the same experts who prepared it.</p>
+        <ul>
+          <li>Per-PR contribution log</li>
+          <li>Reviewer badges &amp; tests authored</li>
+          <li>Release notes with named changes</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Ledger (example)</h3>
+        <pre class="mono">
+2025-08-10  @analyst-lee   normalize units → nM
+2025-08-12  @m.khan        dedup 1,203 ligand IDs
+2025-08-13  @s.evans       add cold_target split
+2025-08-15  @a.rivera      doc assay caveats v1.1
+        </pre>
+      </div>
+    </div>
+  </section>
+
+  <section id="join" class="section wrap">
+    <h2>Get involved</h2>
+    <div class="grid" style="grid-template-columns:1fr 1fr; gap:1rem">
+      <div class="card">
+        <h3>Contribute</h3>
+        <p>Data analysts, curators, reviewers—help prepare high-impact datasets and build a public portfolio of verified work.</p>
+        <p><a class="btn" href="mailto:hello@datasetlabs.org?subject=Contributor%20interest">Email to join</a></p>
+      </div>
+      <div class="card">
+        <h3>Partner</h3>
+        <p>Research teams, startups, nonprofits—use our AI-ready datasets or collaborate on new ones.</p>
+        <p><a class="btn" href="mailto:hello@datasetlabs.org?subject=Partnership%20inquiry">Partner with us</a></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="grid" style="grid-template-columns:1fr 1fr">
+      <div>
+        <strong>DatasetLabs.org</strong><br/>
+        <span class="mono">Open • Credited • AI-ready datasets</span>
+      </div>
+      <div style="text-align:right">
+        <a href="mailto:hello@datasetlabs.org">hello@datasetlabs.org</a> &nbsp;·&nbsp;
+        <a href="https://github.com/your-org" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
 
