@@ -1,294 +1,432 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>datasetlab.org — Crafting AI-Ready Datasets</title>
-  <meta name="description" content="datasetlab.org is a non-profit that prepares, validates, and structures datasets so teams can train AI/ML models faster and more responsibly." />
-  <meta name="theme-color" content="#0a1c2a" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='18' fill='%2317a2a4'/%3E%3Cg fill='%23fff'%3E%3Ccircle cx='40' cy='64' r='10'/%3E%3Ccircle cx='92' cy='32' r='10'/%3E%3Ccircle cx='92' cy='96' r='10'/%3E%3Cpath d='M50 64h30M84 40L58 54M58 74l26 14' stroke='%23fff' stroke-width='6' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E" />
-
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ink: "#0a1c2a",
-            card: "#0f2434",
-            brand: "#17a2a4",
-            brand2: "#15b5b9",
-            muted: "#a9c3c3"
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-    @media (prefers-reduced-motion: reduce){
-      *{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataset Lab - Preparing the World's Datasets for AI</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-ink text-slate-100">
-  <!-- Header -->
-  <header class="sticky top-0 z-30 border-b border-slate-800/80 bg-ink/70 backdrop-blur">
-    <div class="mx-auto max-w-6xl px-4">
-      <nav class="flex h-16 items-center justify-between">
-        <!-- Logo -->
-        <a href="#top" class="flex items-center gap-3" aria-label="datasetlab.org home">
-          <svg viewBox="0 0 160 160" class="h-10 w-10">
-            <rect width="160" height="160" rx="22" fill="#17a2a4"/>
-            <g fill="#fff">
-              <circle cx="52" cy="80" r="11"/>
-              <circle cx="112" cy="44" r="11"/>
-              <circle cx="112" cy="116" r="11"/>
-              <path d="M63 80h38M104 52L72 68M72 92l32 16" stroke="#fff" stroke-linecap="round" stroke-width="7"/>
-            </g>
-            <text x="12" y="150" fill="#0a1c2a" font-family="ui-sans-serif,system-ui,Segoe UI,Roboto,Inter,Arial" font-size="18" font-weight="800">
-              datasetlab.org
-            </text>
-          </svg>
-          <span class="text-lg font-extrabold tracking-tight">datasetlab<span class="text-slate-200">.org</span></span>
-        </a>
-
-        <!-- Desktop nav -->
-        <div class="hidden items-center gap-6 md:flex">
-          <a href="#work" class="hover:text-white/90 text-slate-200">Work</a>
-          <a href="#focus" class="hover:text-white/90 text-slate-200">Focus</a>
-          <a href="#contributors" class="hover:text-white/90 text-slate-200">Contributors</a>
-          <a href="https://www.linkedin.com/company/datasetlab-org/" target="_blank" rel="noopener"
-             class="rounded-xl bg-brand px-4 py-2 font-semibold text-ink hover:bg-brand2">Contact via LinkedIn</a>
-        </div>
-
-        <!-- Mobile menu button -->
-        <button id="menuBtn" class="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-slate-200 hover:bg-slate-800"
-                aria-controls="mobileMenu" aria-expanded="false" aria-label="Open menu">
-          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-        </button>
-      </nav>
-
-      <!-- Mobile menu -->
-      <div id="mobileMenu" class="hidden flex-col gap-2 pb-4 md:hidden">
-        <a href="#work" class="block rounded-lg px-3 py-2 text-slate-200 hover:bg-slate-800">Work</a>
-        <a href="#focus" class="block rounded-lg px-3 py-2 text-slate-200 hover:bg-slate-800">Focus</a>
-        <a href="#contributors" class="block rounded-lg px-3 py-2 text-slate-200 hover:bg-slate-800">Contributors</a>
-        <a href="https://www.linkedin.com/company/datasetlab-org/" target="_blank" rel="noopener"
-           class="block rounded-lg bg-brand px-3 py-2 text-center font-semibold text-ink hover:bg-brand2">Contact via LinkedIn</a>
-      </div>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="loader"></div>
     </div>
-  </header>
 
-  <main id="top">
-    <!-- Hero -->
-    <section class="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-4 py-10 md:grid-cols-2 md:py-14">
-      <div>
-        <span class="inline-flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-900/50 px-3 py-1 text-sm text-teal-100/90">
-          <span class="h-2 w-2 rounded-full bg-brand"></span> Non-profit • Open • Credited
-        </span>
-        <h1 class="mt-4 text-3xl font-extrabold leading-tight sm:text-4xl md:text-5xl">
-          Crafting <em class="not-italic text-brand">AI-ready datasets</em> for global impact.
-        </h1>
-        <p class="mt-3 font-mono text-slate-300">
-          We prepare, validate, and structure datasets so teams can train neural networks faster and more responsibly.
-        </p>
-        <div class="mt-5 flex flex-wrap items-center gap-3">
-          <a href="https://www.linkedin.com/company/datasetlab-org/" target="_blank" rel="noopener"
-             class="rounded-xl bg-brand px-4 py-3 text-center font-semibold text-ink hover:bg-brand2">Contact via LinkedIn</a>
-          <a href="#work" class="text-slate-200 underline-offset-4 hover:underline">How it works</a>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="#home">
+            <img src="images/logo.png" alt="Dataset Lab Logo" style="height: 40px; margin-right: 8px;">
+            Dataset Lab
+          </a>
+          
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#impact">Impact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="theme-toggle" id="themeToggle">
+                            <i class="fas fa-sun theme-toggle-icon sun-icon"></i>
+                            <i class="fas fa-moon theme-toggle-icon moon-icon"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
+    </nav>
 
-        <div class="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <div class="rounded-2xl border border-slate-800 bg-card p-4">
-            <h3 class="text-base font-semibold">Preparation</h3>
-            <p class="mt-1 text-sm text-muted">Cleaning, normalization, schema, metadata, splits.</p>
-          </div>
-          <div class="rounded-2xl border border-slate-800 bg-card p-4">
-            <h3 class="text-base font-semibold">Validation</h3>
-            <p class="mt-1 text-sm text-muted">Automated checks, peer review, audit trails.</p>
-          </div>
-          <div class="rounded-2xl border border-slate-800 bg-card p-4">
-            <h3 class="text-base font-semibold">Release</h3>
-            <p class="mt-1 text-sm text-muted">Docs, benchmarks, licenses, transparent credit.</p>
-          </div>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content fade-in">
+                        <h1>Preparing the World's Datasets for AI</h1>
+                        <p class="lead">We prepare, validate, and structure datasets so teams can train neural networks faster and more responsibly.</p>
+                        <div class="hero-buttons">
+                            <a href="https://www.linkedin.com/company/datasetlab-org/posts/?feedView=all" class="btn-primary-custom">Contact Via Linkedin</a>
+                            <a href="#about" class="btn-outline-custom">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center fade-in">
+                    <div class="hero-image-wrapper mx-auto">
+                        <div class="gradient-circle">
+                            <img src="images/hero_dark.png" alt="AI Globe" class="img-fluid rounded-circle" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-3 mb-4">
+                <div class="stat-card fade-in">
+                  <span class="stat-number counter" data-target="10">50</span>
+                  <div class="stat-label">Followers</div>
+                </div>
+              </div>
+              <div class="col-md-3 mb-4">
+                <div class="stat-card fade-in">
+                  <span class="stat-number counter" data-target="25">25</span>
+                  <div class="stat-label">Team Members</div>
+                </div>
+              </div>
+              <div class="col-md-3 mb-4">
+                <div class="stat-card fade-in">
+                  <span class="stat-number counter" data-target="2025">2025</span>
+                  <div class="stat-label">Founded</div>
+                </div>
+              </div>
+              <div class="col-md-3 mb-4">
+                <div class="stat-card fade-in">
+                  <span class="stat-number">∞</span>
+                  <div class="stat-label">Impact Potential</div>
+                </div>
+              </div>
+          </div>
       </div>
+    </section>
 
-      <div class="space-y-4">
-        <div class="rounded-2xl border border-slate-800 bg-card p-5">
-          <h3 class="text-lg font-semibold">What we publish</h3>
-          <ul class="mt-2 list-disc pl-5 text-sm text-muted">
-            <li>Train/validation/test splits and clear task definitions.</li>
-            <li>Provenance and decisions log for full traceability.</li>
-            <li>Units, conversions, and unambiguous schemas.</li>
-            <li>Responsible-use notes and documented caveats.</li>
-            <li>Versioned releases with changelogs and diffs.</li>
-          </ul>
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Our Core Features</h2>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">
+                            <i class="fas fa-broom"></i>
+                        </div>
+                        <h4>Data Cleaning & Validation</h4>
+                        <p>Transform messy, fragmented data into clean, structured datasets ready for machine learning applications.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4>Quality Assurance</h4>
+                        <p>Rigorous validation processes ensure every dataset meets the highest standards for AI training and research.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4>Contributor Recognition</h4>
+                        <p>Every dataset credits its contributors, showcasing expertise and creating new career opportunities.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h4>Open Access</h4>
+                        <p>Make AI-ready datasets freely available to researchers, startups, and nonprofits worldwide.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h4>Innovation Acceleration</h4>
+                        <p>Enable faster, more effective innovation by providing ready-to-use, high-quality training data.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h4>Deep Learning Ready</h4>
+                        <p>Datasets optimized specifically for deep learning models and advanced AI applications.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="rounded-2xl border border-slate-800 bg-card p-5">
-          <h3 class="text-lg font-semibold">Focus areas</h3>
-          <div class="mt-2 flex flex-wrap gap-2">
-            <span class="rounded-lg border border-teal-700/50 bg-teal-900/20 px-2 py-1 text-sm">Biomedicine</span>
-            <span class="rounded-lg border border-teal-700/50 bg-teal-900/20 px-2 py-1 text-sm">Climate &amp; environment</span>
-            <span class="rounded-lg border border-teal-700/50 bg-teal-900/20 px-2 py-1 text-sm">Agriculture</span>
-            <span class="rounded-lg border border-teal-700/50 bg-teal-900/20 px-2 py-1 text-sm">Biodiversity</span>
-            <span class="rounded-lg border border-teal-700/50 bg-teal-900/20 px-2 py-1 text-sm">Education</span>
-            <span class="rounded-lg border border-teal-700/50 bg-teal-900/20 px-2 py-1 text-sm">Accessibility</span>
+    </section>
+
+    <!-- Mission Section -->
+    <section id="about" class="mission-section">
+        <div class="container">
+            <div class="mission-content">
+                <h2 class="section-title fade-in">Our Mission</h2>
+                <p class="mission-text fade-in">
+                    Dataset Lab is a non-profit organization dedicated to preparing, validating, and structuring high-impact datasets for AI and machine learning. We believe that clean, reliable data is the foundation of breakthrough innovations that can solve humanity's most pressing challenges. Our work spans from drug-protein binding data for medical breakthroughs to environmental monitoring, agriculture, and education datasets.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Areas -->
+    <section id="impact" class="impact-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Impact Areas</h2>
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="impact-item fade-in">
+                        <div class="impact-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <h5>Healthcare</h5>
+                        <p>Drug discovery, protein binding, medical imaging, and clinical research datasets.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="impact-item fade-in">
+                        <div class="impact-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h5>Environment</h5>
+                        <p>Climate monitoring, pollution tracking, and sustainable development datasets.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="impact-item fade-in">
+                        <div class="impact-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <h5>Agriculture</h5>
+                        <p>Crop optimization, soil analysis, and food security research datasets.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="impact-item fade-in">
+                        <div class="impact-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h5>Education</h5>
+                        <p>Learning analytics, educational outcomes, and accessibility datasets.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <div class="team-info fade-in">
+                <h2 class="section-title">About Dataset Lab</h2>
+                <p style="font-size: 1.1rem; color: var(--text-secondary); line-height: 1.8;">
+                    Founded in 2025, Dataset Lab operates at the intersection of data science and social impact. Our small but dedicated team works tirelessly to ensure that high-quality datasets are accessible to researchers and innovators worldwide.
+                </p>
+                <div class="company-info">
+                    <div class="company-stat">
+                        <div class="number">2025</div>
+                        <div class="label">Founded</div>
+                    </div>
+                    <div class="company-stat">
+                        <div class="number">2-10</div>
+                        <div class="label">Employees</div>
+                    </div>
+                    <div class="company-stat">
+                        <div class="number">Non-Profit</div>
+                        <div class="label">Organization</div>
+                    </div>
+                    <div class="company-stat">
+                        <div class="number">Global</div>
+                        <div class="label">Impact</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- what in it for contributors -->
+
+    <!-- Contributor Benefits -->
+    <section id="contributor-benefits" class="impact-section">
+      <div class="container">
+        <h2 class="section-title fade-in">Contributor Benefits</h2>
+        <div class="row">
+          <!-- Card 1 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="impact-item fade-in">
+              <div class="impact-icon"><i class="fas fa-user-check"></i></div>
+              <h5>Public Credit & Portfolio</h5>
+              <p align="left">
+                <i class="fas fa-check"></i> Verifiable contribution history<br>
+                <i class="fas fa-check"></i> Public portfolio of dataset work<br>
+                <i class="fas fa-check"></i> Recognition across prep, validation, and review
+              </p>
+            </div>
+          </div>
+          <!-- Card 2 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="impact-item fade-in">
+              <div class="impact-icon"><i class="fas fa-edit"></i></div>
+              <h5>Per-Change Attribution</h5>
+              <p align="left">
+                <i class="fas fa-check"></i> Named release notes<br>
+                <i class="fas fa-check"></i> Reviewer badges<br>
+                <i class="fas fa-check"></i> Test authorship credits
+              </p>
+            </div>
+          </div>
+          <!-- Card 3 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="impact-item fade-in">
+              <div class="impact-icon"><i class="fas fa-briefcase"></i></div>
+              <h5>Consulting Pathway</h5>
+              <p align="left">
+                <i class="fas fa-check"></i> Direct contact via dataset pages<br>
+                <i class="fas fa-check"></i> Evidence of domain expertise<br>
+                <i class="fas fa-check"></i> Priority for paid roles & collaborations
+              </p>
+            </div>
+          </div>
+          <!-- Card 4 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="impact-item fade-in">
+              <div class="impact-icon"><i class="fas fa-users"></i></div>
+              <h5>Community & Mentorship</h5>
+              <p align="left">
+                <i class="fas fa-check"></i> Collaborate on real data problems<br>
+                <i class="fas fa-check"></i> Receive reviews & feedback<br>
+                <i class="fas fa-check"></i> Grow ML ops & data engineering skills
+              </p>
+            </div>
+          </div>
+          <!-- Card 5 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="impact-item fade-in">
+              <div class="impact-icon"><i class="fas fa-shield-alt"></i></div>
+              <h5>Responsible AI</h5>
+              <p align="left">
+                <i class="fas fa-check"></i> Document caveats & biases<br>
+                <i class="fas fa-check"></i> Ethical model training support<br>
+                <i class="fas fa-check"></i> Transparent data provenance
+              </p>
+            </div>
+          </div>
+          <!-- Card 6 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="impact-item fade-in">
+              <div class="impact-icon"><i class="fas fa-lightbulb"></i></div>
+              <h5>Innovation Recognition</h5>
+              <p align="left">
+                <i class="fas fa-check"></i> Highlighted in dataset showcases<br>
+                <i class="fas fa-check"></i> Featured contributor spotlights<br>
+                <i class="fas fa-check"></i> Invitations to pilot new tools
+              </p>
+            </div>
+          </div>
+          <!-- Card 7 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="impact-item fade-in">
+              <div class="impact-icon"><i class="fas fa-globe"></i></div>
+              <h5>Global Impact</h5>
+              <p align="left">
+                <i class="fas fa-check"></i> Contributions used in real-world research<br>
+                <i class="fas fa-check"></i> Support for underserved regions<br>
+                <i class="fas fa-check"></i> Alignment with UN SDGs
+              </p>
+            </div>
+          </div>
+          <!-- Card 8 -->
+          <div class="col-lg-4 col-md-6">
+            <div class="impact-item fade-in">
+              <div class="impact-icon"><i class="fas fa-certificate"></i></div>
+              <h5>Skill Certification</h5>
+              <p align="left">
+                <i class="fas fa-check"></i> Earn badges for verified contributions<br>
+                <i class="fas fa-check"></i> Track growth across domains<br>
+                <i class="fas fa-check"></i> Shareable credentials
+              </p>
+            </div>
+          </div>
+          <!-- Card 9 (New Addition) -->
+          <div class="col-lg-4 col-md-6">
+            <div class="impact-item fade-in">
+              <div class="impact-icon"><i class="fas fa-comments"></i></div>
+              <h5>Feedback Loop</h5>
+              <p align="left">
+                <i class="fas fa-check"></i> Receive actionable insights<br>
+                <i class="fas fa-check"></i> Influence dataset improvements<br>
+                <i class="fas fa-check"></i> Shape future contributor tools
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- How it works -->
-    <section id="work" class="border-t border-slate-800/70 bg-slate-950/30 py-10 md:py-12">
-      <div class="mx-auto max-w-6xl px-4">
-        <h2 class="text-2xl font-bold">How it works</h2>
-        <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <div class="rounded-2xl border border-slate-800 bg-card p-4">
-            <h3 class="font-semibold">1 · Intake</h3>
-            <p class="mt-1 text-sm text-muted">Ingest public sources, parse, and capture provenance.</p>
-          </div>
-          <div class="rounded-2xl border border-slate-800 bg-card p-4">
-            <h3 class="font-semibold">2 · Prepare</h3>
-            <p class="mt-1 text-sm text-muted">Normalize schemas, units, identifiers, and text.</p>
-          </div>
-          <div class="rounded-2xl border border-slate-800 bg-card p-4">
-            <h3 class="font-semibold">3 · Validate</h3>
-            <p class="mt-1 text-sm text-muted">Automated checks plus peer review; tests live in the repo.</p>
-          </div>
-          <div class="rounded-2xl border border-slate-800 bg-card p-4">
-            <h3 class="font-semibold">4 · Publish</h3>
-            <p class="mt-1 text-sm text-muted">Versioned releases with docs, baselines, and named credit.</p>
-          </div>
+    <!-- CTA Section -->
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="section-title fade-in">Ready to Make an Impact?</h2>
+                <p class="lead fade-in" style="color: var(--text-secondary); margin-bottom: 2rem;">
+                    Join us in preparing the world's datasets for AI that solves humanity's toughest challenges.
+                </p>
+                <div class="fade-in">
+                    <a href="https://www.linkedin.com/company/datasetlab-org/posts/?feedView=all" class="btn-outline-custom">Get in Touch</a>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
-    <!-- Contributors -->
-    <section id="contributors" class="py-10 md:py-12">
-      <div class="mx-auto max-w-6xl px-4">
-        <h2 class="text-2xl font-bold">What’s in it for contributors</h2>
-        <div class="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
-          <div class="rounded-2xl border border-slate-800 bg-card p-6">
-            <h3 class="text-lg font-semibold">Public credit & portfolio</h3>
-            <p class="mt-2 text-slate-300">
-              Every dataset lists a <span class="font-semibold">Data Team</span> with visible contribution history (prep, validation, review). Your work becomes a verifiable, public portfolio.
-            </p>
-            <ul class="mt-2 list-disc pl-5 text-sm text-muted">
-              <li>Per-change attribution</li>
-              <li>Release notes with named changes</li>
-              <li>Reviewer badges and test authorship</li>
-            </ul>
-          </div>
-
-          <div class="rounded-2xl border border-slate-800 bg-card p-6">
-            <h3 class="text-lg font-semibold">Expertise → consulting pathway</h3>
-            <p class="mt-2 text-slate-300">
-              As organizations adopt a dataset, they often need the people who know it best. Because you’ve built and validated the data, you’ve developed a deep relationship with it — making you the natural choice for <span class="font-semibold">paid consulting</span> or <span class="font-semibold">hiring</span>.
-            </p>
-            <ul class="mt-2 list-disc pl-5 text-sm text-muted">
-              <li>Direct contact via dataset pages</li>
-              <li>Clear evidence of expertise and domain knowledge</li>
-              <li>Priority consideration for collaborations and roles</li>
-            </ul>
-          </div>
-
-          <div class="rounded-2xl border border-slate-800 bg-card p-6">
-            <h3 class="text-lg font-semibold">Community, learning, mentorship</h3>
-            <p class="mt-2 text-slate-300">
-              Collaborate with peers on real data problems, receive reviews, and level up your data engineering and ML ops skills in a supportive, mission-driven environment.
-            </p>
-          </div>
-
-          <div class="rounded-2xl border border-slate-800 bg-card p-6">
-            <h3 class="text-lg font-semibold">Responsible AI by design</h3>
-            <p class="mt-2 text-slate-300">
-              We document caveats, biases, and provenance so downstream users train models more responsibly — and your work stands on solid ethical and technical ground.
-            </p>
-          </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h5 style="background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                      <a class="navbar-brand" href="#home">
+                        <img src="images/logo.png" alt="Dataset Lab Logo" style="height: 40px; margin-right: 8px;">
+                        Dataset Lab
+                      </a>
+                    </h5>
+                </div>
+                <div class="footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#features">Features</a>
+                    <a href="#impact">Impact</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.linkedin.com/company/datasetlab-org/posts/?feedView=all"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Dataset Lab. All rights reserved. | Preparing the world's datasets for AI that solves humanity's toughest challenges.</p>
+            </div>
         </div>
+    </footer>
 
-        <div class="mt-6">
-          <a href="https://www.linkedin.com/company/datasetlab-org/" target="_blank" rel="noopener"
-             class="inline-block rounded-xl bg-brand px-5 py-3 font-semibold text-ink hover:bg-brand2">Contact via LinkedIn</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Focus areas -->
-    <section id="focus" class="border-t border-slate-800/70 bg-slate-950/30 py-10 md:py-12">
-      <div class="mx-auto max-w-6xl px-4">
-        <h2 class="text-2xl font-bold">Focus areas</h2>
-        <p class="mt-2 text-slate-300">We prioritize domains where clean, validated datasets unlock outsized impact for AI/ML research and applications.</p>
-        <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          <div class="rounded-2xl border border-slate-800 bg-card p-5">
-            <h3 class="font-semibold">Biomedicine</h3>
-            <p class="mt-1 text-sm text-muted">Standardized measurements, harmonized identifiers, assay context, and responsible-use documentation.</p>
-          </div>
-          <div class="rounded-2xl border border-slate-800 bg-card p-5">
-            <h3 class="font-semibold">Climate & environment</h3>
-            <p class="mt-1 text-sm text-muted">Integrations across observations, models, and geospatial layers with clear metadata and licenses.</p>
-          </div>
-          <div class="rounded-2xl border border-slate-800 bg-card p-5">
-            <h3 class="font-semibold">Agriculture</h3>
-            <p class="mt-1 text-sm text-muted">Crop, soil, and yield datasets aligned for forecasting and decision support.</p>
-          </div>
-          <div class="rounded-2xl border border-slate-800 bg-card p-5">
-            <h3 class="font-semibold">Biodiversity</h3>
-            <p class="mt-1 text-sm text-muted">Species, habitat, and monitoring records prepared for detection and conservation use cases.</p>
-          </div>
-          <div class="rounded-2xl border border-slate-800 bg-card p-5">
-            <h3 class="font-semibold">Education</h3>
-            <p class="mt-1 text-sm text-muted">Anonymized learning datasets with fairness safeguards and clear evaluation splits.</p>
-          </div>
-          <div class="rounded-2xl border border-slate-800 bg-card p-5">
-            <h3 class="font-semibold">Accessibility</h3>
-            <p class="mt-1 text-sm text-muted">Structured datasets for assistive technologies and inclusive ML experiences.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section id="join" class="py-10 md:py-12">
-      <div class="mx-auto max-w-6xl px-4">
-        <div class="rounded-2xl border border-slate-800 bg-card p-6">
-          <h2 class="text-xl font-bold">Interested in contributing or partnering?</h2>
-          <p class="mt-2 text-slate-300">We’re building a transparent pipeline from dataset preparation to responsible use — with public credit for every contributor.</p>
-          <a href="https://www.linkedin.com/company/datasetlab-org/" target="_blank" rel="noopener"
-             class="mt-4 inline-block w-full rounded-xl bg-brand px-4 py-3 text-center font-semibold text-ink hover:bg-brand2 sm:w-auto">Contact via LinkedIn</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="border-t border-slate-800 py-8">
-    <div class="mx-auto max-w-6xl px-4">
-      <div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-        <div>
-          <strong class="font-extrabold">datasetlab.org</strong>
-          <div class="text-sm text-slate-400">Open • Credited • AI-ready datasets</div>
-        </div>
-        <a href="https://www.linkedin.com/company/datasetlab-org/" target="_blank" rel="noopener"
-           class="rounded-xl border border-slate-700 px-4 py-2 text-slate-200 hover:bg-slate-800">Connect on LinkedIn</a>
-      </div>
-      <p class="mt-4 text-xs text-slate-500">© <span id="y"></span> datasetlab.org</p>
-    </div>
-  </footer>
-
-  <script>
-    // Mobile menu toggle
-    const btn = document.getElementById('menuBtn');
-    const menu = document.getElementById('mobileMenu');
-    btn?.addEventListener('click', () => {
-      const open = menu.classList.toggle('hidden');
-      btn.setAttribute('aria-expanded', String(!open));
-    });
-    // Year
-    document.getElementById('y').textContent = new Date().getFullYear();
-  </script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
