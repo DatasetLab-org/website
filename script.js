@@ -28,122 +28,113 @@ themeToggle.addEventListener('click', function() {
     }, 300);
 });
 
+// ===== Scroll Handler (all-in-one) =====
+let lastScrollTop = 0;
+let ticking = false;
 
+function onScroll() {
+  const scrollY = window.scrollY;
+  const navbar = document.querySelector('.navbar');
+  const hero = document.querySelector('.hero');
 
+  if (!navbar) return;
 
+  // Navbar background toggle
+  navbar.classList.toggle('scrolled', scrollY > 50);
 
+  // Hero parallax
+  if (hero) {
+    hero.style.transform = `translateY(${scrollY * 0.5}px)`;
+  }
 
-// Navbar scroll effect
-window.addEventListener('scroll', function() {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-});
+  // Navbar hide/show on scroll direction
+  if (scrollY > lastScrollTop && scrollY > 100) {
+    navbar.style.transform = 'translateY(-100%)';
+  } else {
+    navbar.style.transform = 'translateY(0)';
+  }
 
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
-
-// Animation on scroll
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
-    });
-}, observerOptions);
-
-// Observe all elements with animation classes
-document.querySelectorAll('.fade-in, .slide-in-centre, .slide-in-right').forEach(el => {
-    observer.observe(el);
-});
-
-// Animated counters
-// function animateCounters() {
-//     const counters = document.querySelectorAll('.stat-number');
-//     counters.forEach(counter => {
-//         const target = parseInt(counter.getAttribute('data-target'));
-//         const increment = target / 50;
-//         let current = 0;
-        
-//         const timer = setInterval(() => {
-//             current += increment;
-//             if (current >= target) {
-//                 current = target;
-//                 clearInterval(timer);
-//             }
-//             counter.textContent = Math.floor(current) + '+';
-//         }, 40);
-//     });
-// }
-
-// Trigger counter animation when stats section is visible
-const statsSection = document.querySelector('.stats');
-const statsObserver = new IntersectionObserver(function(entries) {
-    if (entries[0].isIntersecting) {
-        animateCounters();
-        statsObserver.unobserve(statsSection);
-    }
-}, { threshold: 0.5 });
-
-if (statsSection) {
-    statsObserver.observe(statsSection);
+  lastScrollTop = scrollY;
+  ticking = false;
 }
 
-// Mobile menu close on link click
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    requestAnimationFrame(onScroll);
+    ticking = true;
+  }
+});
+
+// ===== Smooth scrolling for anchor links =====
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(anchor.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// ===== Intersection Observer for animations =====
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.fade-in, .slide-in-centre, .slide-in-right')
+  .forEach(el => observer.observe(el));
+
+// ===== Card touch interaction =====
+document.querySelectorAll('.impact-item, .stat-card, .feature-card').forEach(card => {
+  card.addEventListener('touchstart', () => {
+    card.classList.add('tapped');
+    setTimeout(() => card.classList.remove('tapped'), 300);
+  });
+});
+
+// Optional: enable "hover" on mobile for cards
+enableMobileHover('.feature-card');
+
+// ===== Stats counters on scroll =====
+const statsSection = document.querySelector('.stats');
+if (statsSection) {
+  const statsObserver = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      animateCounters();
+      statsObserver.unobserve(statsSection);
+    }
+  }, { threshold: 0.5 });
+  statsObserver.observe(statsSection);
+}
+
+// ===== Close mobile menu on link click =====
 document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        const navbarCollapse = document.querySelector('.navbar-collapse');
-        if (navbarCollapse.classList.contains('show')) {
-            const bsCollapse = new bootstrap.Collapse(navbarCollapse);
-            bsCollapse.hide();
-        }
+  link.addEventListener('click', () => {
+    const navbarCollapse = document.querySelector('.navbar-collapse');
+    if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+      const bsCollapse = new bootstrap.Collapse(navbarCollapse);
+      bsCollapse.hide();
+    }
+  });
+});
+
+// ===== Helper: enable hover-like behavior on mobile =====
+function enableMobileHover(selector, hoverClass = 'hover-active') {
+  const elements = document.querySelectorAll(selector);
+
+  elements.forEach(el => {
+    el.addEventListener('touchstart', () => {
+      elements.forEach(e => e.classList.remove(hoverClass));
+      el.classList.add(hoverClass);
     });
-});
 
-// Parallax effect for hero background
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    if (hero) {
-        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-    }
-});
-
-// Dynamic navbar background
-let lastScrollTop = 0;
-window.addEventListener('scroll', () => {
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const navbar = document.querySelector('.navbar');
-    
-    if (scrollTop > lastScrollTop && scrollTop > 100) {
-        // Scrolling down
-        navbar.style.transform = 'translateY(-100%)';
-    } else {
-        // Scrolling up
-        navbar.style.transform = 'translateY(0)';
-    }
-    lastScrollTop = scrollTop;
-});
-
+    el.addEventListener('touchend', () => {
+      setTimeout(() => el.classList.remove(hoverClass), 1000);
+    });
+  });
+}
 // Loading animation
 window.addEventListener('load', () => {
     document.body.style.opacity = '0';
@@ -151,7 +142,22 @@ window.addEventListener('load', () => {
     setTimeout(() => {
         document.body.style.opacity = '1';
     }, 100);
+
+    // ✅ Initialize mobile hover simulation
+    enableMobileHover('.strategy-card');
 });
+
+const hoverObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-hover');
+      }
+    });
+  }, { threshold: 0.5 });
+  
+  document.querySelectorAll('.strategy-card, .feature-card, .impact-item').forEach(card => {
+    hoverObserver.observe(card);
+  });
 
 // Interactive feature cards
 document.querySelectorAll('.feature-card, .stat-card, .impact-area').forEach(card => {
